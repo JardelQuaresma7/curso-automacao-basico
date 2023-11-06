@@ -82,4 +82,10 @@ it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obr
 
         cy.get('.success').should('be.visible')
     })
+
+    it.only('seleciona um produto (YouTube) por seu texto', function() {
+        cy.get('select')
+            .select('YouTube')
+            .should('have.value', 'youtube')
+    })
 })
