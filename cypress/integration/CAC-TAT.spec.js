@@ -125,10 +125,19 @@ it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obr
         .should('not.be.checked')
     })
 
-    it.only('seleciona um arquivo da pasta fixtures', function() {
+    it('seleciona um arquivo da pasta fixtures', function() {
         cy.get('input[type="file"]')
         .should('not.have.value')
-        .selectFile('cypress/fixtures/example.json')
+        .selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
+        .should(function($input) {
+           expect($input[0].files[0].name).to.eq('example.json')
+        })
+    })
+
+    it('seleciona um arquivo simulando um drag-and-drop', function() {
+        cy.get('input[type="file"]')
+        .should('not.have.value')
+        .selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
         .should(function($input) {
            expect($input[0].files[0].name).to.eq('example.json')
         })
