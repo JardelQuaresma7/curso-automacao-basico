@@ -39,11 +39,11 @@ describe('Central de Atendimento ao Cliente TAT', function() {
             .should('have.value', '')
     })
 
-    it('exibe mensagem de erro quando telefone se torna obrigatório mas não é preenchido antes do envio do fornulário', function() {
+    it.only('exibe mensagem de erro quando telefone se torna obrigatório mas não é preenchido antes do envio do fornulário', function() {
         cy.get('#firstName').type('Jardel')
         cy.get('#lastName').type('Quaresma')
         cy.get('#email').type('jardelquaresma7@gmail.com')
-        cy.get('#phone-checkbox').click()
+        cy.get('#phone-checkbox').check()
         cy.get('#open-text-area').type('Teste')
         cy.contains('button', 'Enviar').click()
 
@@ -101,9 +101,27 @@ it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obr
             .should('have.value', 'blog')
     })
 
-    it.only('marca o tipo de atendimento "Feedback"', function() {
+    it('marca o tipo de atendimento "Feedback"', function() {
         cy.get('input[type="radio"][value="feedback"]')
         .check()
         .should('have.value','feedback')
+    })
+
+    it('marca cada tipo de atendimento' , function() {
+        cy.get('input[type="radio"]')
+        .should('have.length', 3)
+        .each(function($radio) {
+         cy.wrap($radio).check()
+         cy.wrap($radio).should('be.checked')
+        })
+    })
+
+    it('marca ambos checkboxes, depois desmarca o último', function() {
+        cy.get('input[type="checkbox"]')
+        .check()
+        .should('be.checked')
+        .last()
+        .uncheck()
+        .should('not.be.checked')
     })
 })
