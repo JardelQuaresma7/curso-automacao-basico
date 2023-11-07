@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+const { should } = require("chai")
+
 describe('Central de Atendimento ao Cliente TAT', function() {
     beforeEach(function() {
         cy.visit('./src/index.html')
@@ -93,9 +95,15 @@ it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obr
             .select('mentoria')
             .should('have.value', 'mentoria')
     })
-    it.only('seleciona um produto (Blog) por seu índice', function() {
+    it('seleciona um produto (Blog) por seu índice', function() {
         cy.get('#product')
             .select(1)
             .should('have.value', 'blog')
+    })
+
+    it.only('marca o tipo de atendimento "Feedback"', function() {
+        cy.get('input[type="radio"][value="feedback"]')
+        .check()
+        .should('have.value','feedback')
     })
 })
