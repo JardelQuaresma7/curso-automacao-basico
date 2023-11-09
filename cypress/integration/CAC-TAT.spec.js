@@ -142,4 +142,13 @@ it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obr
            expect($input[0].files[0].name).to.eq('example.json')
         })
     })
+
+    it.only('seleciona um arquivo utilizando uma fixture paraa qual foi dada um alias', function() {
+        cy.fixture('example.json').as('sampleFile')
+        cy.get('input[type="file"]')
+          .selectFile('@sampleFile')
+          .should(function($input) {
+            expect($input[0].files[0].name).to.eq('example.json')
+         }) 
+    })
 })
