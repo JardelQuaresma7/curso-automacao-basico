@@ -143,12 +143,24 @@ it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obr
         })
     })
 
-    it.only('seleciona um arquivo utilizando uma fixture paraa qual foi dada um alias', function() {
+    it('seleciona um arquivo utilizando uma fixture paraa qual foi dada um alias', function() {
         cy.fixture('example.json').as('sampleFile')
         cy.get('input[type="file"]')
           .selectFile('@sampleFile')
           .should(function($input) {
             expect($input[0].files[0].name).to.eq('example.json')
          }) 
+    })
+
+    it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function() {
+       cy.get('#privacy a').should('have.attr', 'target', '_blank')
+    })
+
+    it('acessa a página da política de privacidade removendo o target e então clicando no link' ,function() {
+        cy.get('#privacy a')
+          .invoke('removeAttr', 'target')
+          .click()
+
+          cy.contains('Talking About Testing').should('be.visible')
     })
 })
